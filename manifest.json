@@ -1,0 +1,36 @@
+{
+  "manifest_version": 3,
+  "name": "VIP Server Joiner for Roblox UWP",
+  "version": "1.0",
+  "description": "A extension that makes it possible to join vip servers on Roblox from Microsoft Store (UWP)",
+
+  "icons": {
+    "64": "icons/extension/icon64.png"
+  },
+
+  "permissions": ["tabs"],
+  "host_permissions": ["*://www.roblox.com/*"],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://www.roblox.com/games/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/uwp.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}
