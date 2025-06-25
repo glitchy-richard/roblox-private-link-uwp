@@ -22,27 +22,10 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   playBtn.addEventListener('click', function () {
+    if (!serverLinkInput.value) return;
+
     const vipLink = serverLinkInput.value.trim();
-
-    try {
-      const url = new URL(vipLink);
-      const gameIdMatch = url.pathname.match(/\/games\/(\d+)/);
-      const gameId = gameIdMatch ? gameIdMatch[1] : null;
-      const linkCode = url.searchParams.get('privateServerLinkCode');
-
-      if (gameId && linkCode) {
-        const robloxProtocolLink = `roblox://placeID=${gameId}&LinkCode=${linkCode}`;
-
-        chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-          const tab = tabs[0];
-          chrome.tabs.update(tab.id, { url: robloxProtocolLink });
-        });
-      } else {
-        alert('Invalid Roblox VIP link.');
-      }
-    } catch (e) {
-      alert('Invalid URL format.');
-    }
+    chrome.runtime.sendMessage({ action: 'joinURL', url: vipLink, button: playBtn});
   });
 
   clearBtn.addEventListener("click", () => {

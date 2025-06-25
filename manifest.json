@@ -12,7 +12,7 @@
   "host_permissions": ["*://www.roblox.com/*"],
 
   "action": {
-    "default_popup": "popup.html"
+    "default_popup": "src/html/popup.html"
   },
 
   "background": {
@@ -21,8 +21,11 @@
 
   "content_scripts": [
     {
-      "matches": ["*://www.roblox.com/games/*"],
-      "js": ["content.js"],
+      "matches": [
+        "*://www.roblox.com/games/*",
+        "*://www.roblox.com/*/games/*"
+      ],
+      "js": ["src/content.js"],
       "run_at": "document_idle"
     }
   ],
