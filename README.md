@@ -36,7 +36,7 @@ There are **three ways** to join a private server on Roblox UWP:
 - Click the **"Join private server on UWP"** button.
 - Paste the **private server link** and click **Join**.
 
-![Servers Section](https://github.com/user-attachments/assets/32f1d6a6-207a-4ac8-8637-14c8a1079ca3)
+![Servers Section](https://github.com/user-attachments/assets/ba817580-7082-496d-a440-b4f8ca14f0c2)
 
 ---
 
@@ -46,7 +46,7 @@ There are **three ways** to join a private server on Roblox UWP:
 - Paste the **private server link** and click **Join**.
 - If the icon is not visible, check the **extension toolbox**.
 
-![Extension Icon](https://github.com/user-attachments/assets/513ded78-a638-4d3e-aac1-546c6542004b)
+![Extension Icon](https://github.com/user-attachments/assets/f154f256-aeea-4d47-a738-ad64760f9daa)
 
 ---
 
@@ -56,7 +56,7 @@ There are **three ways** to join a private server on Roblox UWP:
 - Click the **Windows icon button** next to the standard **Play** button.
 - If Roblox Web opens automatically, **close it**.
 
-![Private Server Page](https://github.com/user-attachments/assets/0bef4d47-fc02-4dac-a905-038873f5532e)
+![Private Server Page](https://github.com/user-attachments/assets/8692668e-ae52-4635-acf8-163c859edfb3)
 
 ---
 
