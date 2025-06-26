@@ -10,7 +10,6 @@ Use this extension to join any private server link on Roblox from the Microsoft 
 ## ⚙️ Manual Installation
 
 ### Chrome / Edge / Brave / Opera (Chromium-based browsers)
-
 1. Open `chrome://extensions/` in your browser.
 2. Enable **Developer mode** (top right corner).
 3. Click **Load unpacked** and select the folder containing the `manifest.json` file.
