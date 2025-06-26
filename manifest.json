@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "VIP Server Joiner for Roblox UWP",
-  "version": "1.0",
-  "description": "A extension that makes it possible to join vip servers on Roblox from Microsoft Store (UWP)",
+  "name": "Private Link to Roblox UWP",
+  "version": "1.2",
+  "description": "Join private server links on Roblox UWP, even if you also have Roblox Web.",
 
   "icons": {
     "64": "icons/extension/icon64.png"

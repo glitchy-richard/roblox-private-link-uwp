@@ -1,12 +1,12 @@
 // ==UserScript==
-// @name         Join Private Servers on Roblox UWP
-// @namespace    http://tampermonkey.net/
-// @version      1.1
-// @description  Adds button to join Roblox UWP on private servers.
+// @name         Private Server Link to Roblox UWP
+// @namespace    https://www.roblox.com/
+// @version      1.2
+// @description  Join private server links on Roblox UWP, even if you also have Roblox Web.
 // @author       Richard
-// @match        https://www.roblox.com/games/*
-// @run-at       document-idle
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=roblox.com
+// @match        *://www.roblox.com/games/*
+// @match        *://www.roblox.com/*/games/*
+// @icon         https://tr.rbxcdn.com/180DAY-a7dfc13043c75d100d3485b59701c27e/150/150/Decal/Webp/noFilter
 // @grant        none
 // ==/UserScript==
 
@@ -44,8 +44,6 @@
         const defaultJoinBtn = container?.querySelector('button[data-testid="play-button"]');
 
         if (container && defaultJoinBtn) {
-            container.innerHTML = '';
-
             const actionsGroup = document.createElement('div');
             actionsGroup.id = 'improved-game-actions';
             actionsGroup.style.display = 'flex';
@@ -125,7 +123,7 @@
         const originalBtn = container.querySelector('button.rbx-private-server-create-button');
         if (!originalBtn) return;
 
-        const toggleInsertLinkBtn = originalBtn.cloneNode(true);
+        const toggleInsertLinkBtn = document.createElement("button");
         toggleInsertLinkBtn.id = "toggleInsertLinkBtn";
         toggleInsertLinkBtn.className = "btn-more btn-secondary-md btn-min-width";
         toggleInsertLinkBtn.textContent = "Join private server on UWP";
@@ -155,6 +153,7 @@
         joinLinkBtn.textContent = "Join";
         joinLinkBtn.style.borderRadius = "8px";
         joinLinkBtn.style.height = "30px";
+        joinLinkBtn.style.width = "50px"
         joinLinkBtn.style.border = "none";
         joinLinkBtn.style.backgroundColor = "white";
         joinLinkBtn.style.color = "black";
@@ -177,12 +176,24 @@
 
     function addJoinUWPButton() {
         const url = new URL(window.location.href);
-        if (!url.searchParams.get("privateServerLinkCode")) return;
+        if (!url.searchParams.get("privateServerLinkCode")) return false
+
         addCustomButton();
+        return true
     }
 
     const observer = new MutationObserver(() => {
-        addJoinUWPButton();
+        let canbeAdded = addJoinUWPButton()
+
+        if (document.getElementById("improved-game-actions") || !canbeAdded) {
+            // console.log("No longer observing for pages changes to add Join UWP Button.")
+            observer.disconnect()
+        }
+    });
+
+    observer.observe(document.body, {
+        childList: true,
+        subtree: true
     });
 
     const psInterval1 = setInterval(() => {
@@ -190,27 +201,24 @@
             clearInterval(psInterval1);
             addInsertLinkButton();
 
+            function refresh() {
+                var existingBtn = document.getElementById('toggleInsertLinkBtn');
+                if (existingBtn) existingBtn.remove();
+                var existingDiv = document.getElementById('linkInsertDiv');
+                if (existingDiv) existingDiv.remove();
+
+                var retryInterval = setInterval(function () {
+                    if (document.getElementsByClassName('rbx-private-server-create').length > 1) {
+                        clearInterval(retryInterval);
+                        addInsertLinkButton();
+                    }
+                }, 100);
+            }
+
             const refreshBtn = document.querySelector('.rbx-refresh.refresh-link-icon');
             if (refreshBtn) {
-                refreshBtn.addEventListener('click', function () {
-                    const existingBtn = document.getElementById('toggleInsertLinkBtn');
-                    if (existingBtn) existingBtn.remove();
-                    const existingDiv = document.getElementById('linkInsertDiv');
-                    if (existingDiv) existingDiv.remove();
-
-                    const retryInterval = setInterval(() => {
-                        if (document.getElementsByClassName('rbx-private-server-create').length > 1) {
-                            clearInterval(retryInterval);
-                            addInsertLinkButton();
-                        }
-                    }, 100);
-                });
+                refreshBtn.addEventListener('click', refresh);
             }
         }
     }, 100);
-
-    observer.observe(document.body, {
-        childList: true,
-        subtree: true
-    });
 })();

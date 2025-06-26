@@ -1,18 +1,35 @@
-function joinServer(robloxProtocolLink, button) {
-  chrome.runtime.sendMessage({ action: 'joinURL', url: robloxProtocolLink, button: button});
+function joinServer(rawURL, btn) {
+  try {
+    const url = new URL(rawURL);
+    const gameId = url.pathname.match(/\/games\/(\d+)/)?.[1];
+    const linkCode = url.searchParams.get('privateServerLinkCode');
+
+    if (gameId && linkCode) {
+      const robloxProtocolLink = `roblox://placeID=${gameId}&LinkCode=${linkCode}`;
+      chrome.runtime.sendMessage({ action: "joinURL", url: robloxProtocolLink });
+    } else {
+      throw new Error();
+    }
+  } catch {
+    const originalColor = window.getComputedStyle(btn).backgroundColor;
+    const originalText = btn.textContent;
+
+    btn.style.backgroundColor = 'red';
+    btn.textContent = "!!";
+
+    setTimeout(() => {
+      btn.style.backgroundColor = originalColor;
+      btn.textContent = originalText;
+    }, 1000);
+  }
 }
 
 function addCustomButton() {
-  if (document.getElementById('improved-game-actions')) {
-    return
-  }
-
+  if (document.getElementById('improved-game-actions')) return
   const container = document.getElementById('game-details-play-button-container');
   const defaultJoinBtn = container?.querySelector('button[data-testid="play-button"]');
 
   if (container && defaultJoinBtn) {
-    container.innerHTML = '';
-
     const actionsGroup = document.createElement('div');
     actionsGroup.id = 'improved-game-actions';
     actionsGroup.style.display = 'flex';
@@ -64,7 +81,7 @@ function addCustomButton() {
     });
     icon.onerror = () => {
       icon.remove()
-      joinUWPBtn.appendChild(text);
+      joinUWPBtn.textContent = "UWP"
     }
 
     // Click on Join UWP Button
@@ -96,12 +113,16 @@ function addInsertLinkButton() {
   const originalBtn = container.querySelector('button.rbx-private-server-create-button');
   if (!originalBtn) return;
 
-  const toggleInsertLinkBtn = originalBtn.cloneNode(true);
+  const toggleInsertLinkBtn = document.createElement("button");
   toggleInsertLinkBtn.id = "toggleInsertLinkBtn";
   toggleInsertLinkBtn.className = "btn-more btn-secondary-md btn-min-width";
   toggleInsertLinkBtn.textContent = "Join private server on UWP";
   toggleInsertLinkBtn.style.marginBottom = "0px";
   toggleInsertLinkBtn.style.marginTop = "5px";
+
+  // if (toggleInsertLinkBtn.hasAttribute("disabled")) {
+  //   toggleInsertLinkBtn.removeAttribute("disabled")
+  // }
 
   const insertLinkDiv = document.createElement("div");
   insertLinkDiv.id = "linkInsertDiv";
@@ -126,6 +147,7 @@ function addInsertLinkButton() {
   joinLinkBtn.textContent = "Join";
   joinLinkBtn.style.borderRadius = "8px"
   joinLinkBtn.style.borderColor = ""
+  joinLinkBtn.style.width = "50px"
   joinLinkBtn.style.height = "30px"
   joinLinkBtn.style.border = "none"
   joinLinkBtn.style.backgroundColor = "white"
@@ -139,7 +161,7 @@ function addInsertLinkButton() {
 
   joinLinkBtn.addEventListener('click', () => {
     if (!linkInputBox.value) return;
-    joinServer(linkInputBox.value, joinLinkBtn)
+    joinServer(linkInputBox.value.trim(), joinLinkBtn)
   });
 
   container.appendChild(toggleInsertLinkBtn);
@@ -148,13 +170,24 @@ function addInsertLinkButton() {
 
 function addJoinUWPButton() {
   const url = new URL(window.location.href);
-  if (!url.searchParams.get("privateServerLinkCode")) return
+  if (!url.searchParams.get("privateServerLinkCode")) return false
 
   addCustomButton();
+  return true
 }
 
 const observer = new MutationObserver(() => {
-  addJoinUWPButton()
+  let canbeAdded = addJoinUWPButton()
+
+  if (document.getElementById("improved-game-actions") || !canbeAdded) {
+    // console.log("No longer observing for pages changes to add Join UWP Button.")
+    observer.disconnect()
+  }
+});
+
+observer.observe(document.body, {
+  childList: true,
+  subtree: true
 });
 
 var psInterval1 = setInterval(function () {
@@ -162,26 +195,23 @@ var psInterval1 = setInterval(function () {
     clearInterval(psInterval1);
     addInsertLinkButton();
 
+    function refresh() {
+      var existingBtn = document.getElementById('toggleInsertLinkBtn');
+      if (existingBtn) existingBtn.remove();
+      var existingDiv = document.getElementById('linkInsertDiv');
+      if (existingDiv) existingDiv.remove();
+
+      var retryInterval = setInterval(function () {
+        if (document.getElementsByClassName('rbx-private-server-create').length > 1) {
+          clearInterval(retryInterval);
+          addInsertLinkButton();
+        }
+      }, 100);
+    }
+
     var refreshBtn = document.querySelector('.rbx-refresh.refresh-link-icon');
     if (refreshBtn) {
-      refreshBtn.addEventListener('click', function () {
-        var existingBtn = document.getElementById('toggleInsertLinkBtn');
-        if (existingBtn) existingBtn.remove();
-        var existingDiv = document.getElementById('linkInsertDiv');
-        if (existingDiv) existingDiv.remove();
-
-        var retryInterval = setInterval(function () {
-          if (document.getElementsByClassName('rbx-private-server-create').length > 1) {
-            clearInterval(retryInterval);
-            addInsertLinkButton();
-          }
-        }, 100);
-      });
+      refreshBtn.addEventListener('click', refresh);
     }
   }
 }, 100);
-
-observer.observe(document.body, {
-  childList: true,
-  subtree: true
-});
