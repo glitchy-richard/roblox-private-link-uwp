@@ -1,4 +1,4 @@
-# Private Server Joiner for Roblox UWP
+# Private Server Link to Roblox UWP
 
 Use this extension to join any private server link on Roblox from the Microsoft Store (UWP version), even if you also have Roblox Web installed.
 
