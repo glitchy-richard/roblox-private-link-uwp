@@ -16,13 +16,6 @@ Use this extension to join any private server link on Roblox from the Microsoft 
 3. Click **Load unpacked** and select the folder containing the `manifest.json` file.
 4. The extension will be loaded and appear in your extensions list.
 
-### Firefox
-
-1. Go to `about:debugging` → **This Firefox**.
-2. Click **Load Temporary Add-on…**
-3. Select any file inside the extension folder (e.g., `manifest.json`).
-4. The extension will remain active until the browser is restarted.
-
 ---
 
 ## 🔧 How to Use the Extension
