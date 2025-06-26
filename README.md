@@ -1,41 +1,60 @@
 # Private Server Joiner for Roblox UWP
 
-Use this extension to join any private server link on Roblox from Microsoft Store (UWP), even if you have Roblox Web installed.
+Use this extension to join any private server link on Roblox from the Microsoft Store (UWP version), even if you also have Roblox Web installed.
+
+> **Note:** This extension is not currently available on any extension store.  
+> You will need to install it manually in your browser.
 
 ---
 
-## 🔧 How to Use
+## ⚙️ Manual Installation
 
-You have **three ways** of joining a private server on Roblox UWP:
+### Chrome / Edge / Brave / Opera (Chromium-based browsers)
+
+1. Open `chrome://extensions/` in your browser.
+2. Enable **Developer mode** (top right corner).
+3. Click **Load unpacked** and select the folder containing the `manifest.json` file.
+4. The extension will be loaded and appear in your extensions list.
+
+### Firefox
+
+1. Go to `about:debugging` → **This Firefox**.
+2. Click **Load Temporary Add-on…**
+3. Select any file inside the extension folder (e.g., `manifest.json`).
+4. The extension will remain active until the browser is restarted.
 
 ---
 
-### 1. Join from the Servers Section of a Game
+## 🔧 How to Use the Extension
 
-- Open the Roblox game page.
+There are **three ways** to join a private server on Roblox UWP:
+
+### 1. From the Servers Section of a Game
+
+- Open the **game page** on Roblox.
 - Scroll to the **Servers** section.
 - Click the **"Join private server on UWP"** button.
-- Paste the **private server link** and press on Join button.
+- Paste the **private server link** and click **Join**.
 
 ![Servers Section](https://github.com/user-attachments/assets/32f1d6a6-207a-4ac8-8637-14c8a1079ca3)
 
 ---
 
-### 2. Join Using the Extension Icon
+### 2. Using the Extension Icon
 
 - Click the **extension icon** in your browser.
-- Paste the **private server link** and press Join.
-- If not pinned, find it in the **extension toolbox**.
+- Paste the **private server link** and click **Join**.
+- If the icon is not visible, check the **extension toolbox**.
 
 ![Extension Icon](https://github.com/user-attachments/assets/513ded78-a638-4d3e-aac1-546c6542004b)
 
 ---
 
-### 3. Join from the Private Server Link Page
+### 3. From a Private Server Link Page
 
-- Open the **private server link page** in your browser.
-- Click the **Windows icon button** next to the standard "Play" button.
-- Make sure to **close Roblox Web** if it opens automatically.
+- Open the **private server link** in your browser.
+- Click the **Windows icon button** next to the standard **Play** button.
+- If Roblox Web opens automatically, **close it**.
 
 ![Private Server Page](https://github.com/user-attachments/assets/0bef4d47-fc02-4dac-a905-038873f5532e)
 
