@@ -54,4 +54,4 @@ There are **three ways** to join a private server on Roblox UWP:
 
 ## ❓ Need Help?
 
-Contact me on **Discord**: `@richarddy`
+Contact me on **Discord**: `@gatin.js`
