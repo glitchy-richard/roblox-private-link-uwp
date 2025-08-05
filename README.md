@@ -1,6 +1,6 @@
 # Private Server Link to Roblox UWP
 
-On a chromium-based browser, use this extension to join any private server link on Roblox from the Microsoft Store (UWP version), even if you also have Roblox Web installed.
+On a chromium-based browser, use this extension to join any private server link on Roblox UWP, even if you also have Roblox Web installed.
 
 > **Note:** This extension is not currently available on any extension store.  
 > You will need to install it manually in your browser.
